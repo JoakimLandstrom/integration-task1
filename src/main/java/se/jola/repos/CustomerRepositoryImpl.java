@@ -1,13 +1,21 @@
 package se.jola.repos;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicLong;
+
+import org.springframework.stereotype.Component;
 
 import se.jola.model.Customer;
 
+@Component
 public class CustomerRepositoryImpl implements CustomerRepository {
 
 	private static Map<Long, Customer> customers = new HashMap<Long, Customer>();
+	private static AtomicLong atomicLong = new AtomicLong();
+
 
 	@Override
 	public Customer getCustomer(Long id) {
@@ -30,9 +38,19 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	@Override
 	public Customer createCustomer(Customer customer) {
 
+		customer.setId(atomicLong.incrementAndGet());
+		
 		customers.put(customer.getId(), customer);
 
 		return customer;
 	}
+
+	@Override
+	public List<Customer> getCustomers(int amount) {
+		
+		return Collections.list(Collections.enumeration(customers.values())).subList(0, amount);
+	}
+	
+	
 
 }

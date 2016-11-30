@@ -1,10 +1,9 @@
 package se.jola.repos;
 
-import javax.inject.Singleton;
+import java.util.List;
 
 import se.jola.model.Customer;
 
-@Singleton
 public interface CustomerRepository {
 	
 	public Customer getCustomer(Long id);
@@ -14,5 +13,7 @@ public interface CustomerRepository {
 	public void deleteCustomer(Long id);
 	
 	public Customer createCustomer(Customer customer);
+	
+	public List<Customer> getCustomers(int amout); 
 
 }
