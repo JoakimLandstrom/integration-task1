@@ -1,8 +1,10 @@
 package se.jola.resource;
 
+import static se.jola.model.parser.CustomerParser.asXml;
+import static se.jola.model.parser.CustomerParser.fromXml;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 import javax.ws.rs.BeanParam;
 import javax.ws.rs.Consumes;
@@ -23,8 +25,6 @@ import org.springframework.stereotype.Component;
 import se.jola.model.Customer;
 import se.jola.model.PageRequestBean;
 import se.jola.repos.CustomerRepository;
-
-import static se.jola.model.parser.CustomerParser.*;
 
 @Path("customer")
 @Component
@@ -61,22 +61,22 @@ public class CustomerResource {
 	}
 
 	@POST
+	@Consumes(MediaType.TEXT_PLAIN)
 	public Response createCustomer(String content) {
 
-		Customer customer = repo.createCustomer(fromXml(content));
-
+		Customer customer = repo.createCustomer(new Customer(content, content));
+		
 		return Response.status(Status.CREATED).header("Location", "customer/" + customer.getId()).build();
 	}
 	
-//	@POST
-//	@Consumes(MediaType.APPLICATION_XML)
-//	public Response createCustomerWithXml(String content){
-//		
-//		Customer customer = repo.createCustomer(fromXml(content));
-//		
-//		
-//		return Response.status(Status.CREATED).header("Location", "customer/" + customer.getId()).build();
-//	}
+	@POST
+	@Consumes(MediaType.APPLICATION_XML)
+	public Response createCustomerWithXml(String content){
+		
+		Customer customer = repo.createCustomer(fromXml(content));
+		
+		return Response.status(Status.CREATED).header("Location", "customer/" + customer.getId()).build();
+	}
 
 	@DELETE
 	@Path("{id}")

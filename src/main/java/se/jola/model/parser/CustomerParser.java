@@ -49,9 +49,7 @@ public class CustomerParser {
 			
 			Element root = parser.build(xml, null).getRootElement();
 			
-			System.out.println(root.getChildElements().toString());
-			
-			customer = new Customer("syso", "syso");
+			customer = new Customer(root.getFirstChildElement("firstName").getValue(), root.getFirstChildElement("lastName").getValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
