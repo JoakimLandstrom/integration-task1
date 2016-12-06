@@ -1,6 +1,8 @@
 package se.jola.repos;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +51,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 	public List<Customer> getCustomers(int amount) {
 		
 		return Collections.list(Collections.enumeration(customers.values())).subList(0, amount);
+	}
+	
+	@Override
+	public List<Customer> getAllCustomers(){
+		return new ArrayList<Customer>(customers.values());
 	}
 	
 	

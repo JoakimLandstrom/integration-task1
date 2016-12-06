@@ -1,6 +1,7 @@
 package se.jola.repos;
 
 import java.util.List;
+import java.util.Map;
 
 import se.jola.model.Customer;
 
@@ -14,6 +15,8 @@ public interface CustomerRepository {
 	
 	public Customer createCustomer(Customer customer);
 	
-	public List<Customer> getCustomers(int amout); 
+	public List<Customer> getCustomers(int amout);
+
+	List<Customer> getAllCustomers(); 
 
 }
